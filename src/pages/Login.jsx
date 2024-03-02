@@ -1,5 +1,6 @@
 import { useState, useContext } from "react";
-import { Link } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
+//import { Link } from "react-router-dom";
 
 import { auth } from "../firebase"; // Adjust the path as necessary
 import {
@@ -17,6 +18,7 @@ function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const navigate = useNavigate();
   //const [isLoading, setIsLoading] = useState(false); // Add loading state
   //const { checkingStatus } = useContext(AuthContext)
 
@@ -27,11 +29,8 @@ function Login() {
     event.preventDefault();
     //console.log(email, password);
     try {
-      const userCredential = await signInWithEmailAndPassword(
-        auth,
-        email,
-        password
-      );
+      await signInWithEmailAndPassword(auth, email, password);
+      navigate("/Profile");
       console.log(userCredential.user);
       //navigate('/profile') // Redirect to profile page after successful login
     } catch (error) {
